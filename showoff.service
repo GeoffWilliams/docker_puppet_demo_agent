@@ -1,0 +1,12 @@
+[Unit]
+Description=showoff
+
+[Service]
+TimeoutStartSec=0
+Environment="PATH=/opt/puppetlabs/puppet/bin/:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+Environment="LANG=en_US.UTF-8"
+User=showoff
+ExecStart=cd /home/showoff/presentation/aws && showoff serve
+
+[Install]
+WantedBy=multi-user.target
