@@ -2,11 +2,14 @@
 Description=showoff
 
 [Service]
+Type=forking
 TimeoutStartSec=0
 Environment="PATH=/opt/puppetlabs/puppet/bin/:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 Environment="LANG=en_US.UTF-8"
+PIDFile=/var/run/showoff.pid
 User=showoff
-ExecStart=cd /home/showoff/presentation/aws && showoff serve
+WorkingDirectory=/home/showoff/presentation/aws
+ExecStart=/usr/local/bin/showoff serve
 
 [Install]
 WantedBy=multi-user.target
