@@ -4,7 +4,8 @@
 FROM picoded/centos-systemd:latest
 MAINTAINER Geoff Williams <geoff.williams@puppet.com>
 RUN \
-  yum update -y && \
+  yum update -y
+RUN \
   yum groupinstall -y "Development Tools" && \
   yum install -y cronie \
     ruby \
@@ -20,10 +21,10 @@ RUN \
   adduser showoff && \
   mkdir /home/showoff/presentation && \
   systemctl disable firewalld && \
-  echo "metadata_expire=never" >> /etc/yum.conf \
-  echo 'export LC_ALL="en_US.UTF-8"' >> /etc/profile.d/zz_docker_puppet.sh && \
-  echo 'export PATH=/opt/puppetlabs/puppet/bin/:${PATH}' >> /etc/profile.d/zz_docker_puppet.sh && \
-  echo 'export TERM=xterm' >> /etc/profile.d/zz_docker_puppet.sh
+  echo "metadata_expire=never" >> /etc/yum.conf && \
+  echo "export PATH=/opt/puppetlabs/puppet/bin/:${PATH}" >> /etc/profile.d/zz_docker_puppet.sh && \
+  echo "export TERM=xterm"  >> /etc/profile.d/zz_docker_puppet.sh && \
+  echo "LC_ALL='en_US.UTF-8'" >> /etc/profile.d/zz_docker_puppet.sh
 
 # systemd for showoff  
 ADD showoff.service /etc/systemd/system
