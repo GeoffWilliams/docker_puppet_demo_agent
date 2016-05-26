@@ -8,7 +8,7 @@ Environment="PATH=/opt/puppetlabs/puppet/bin/:/usr/local/bin:/usr/bin:/bin:/usr/
 Environment="LANG=en_US.UTF-8"
 PIDFile=/var/run/showoff.pid
 User=showoff
-WorkingDirectory=/home/showoff/presentation/aws
+WorkingDirectory=/home/showoff/presentation
 ExecStart=/usr/local/bin/showoff serve
 
 [Install]
