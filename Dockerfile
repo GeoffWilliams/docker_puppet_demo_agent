@@ -16,7 +16,9 @@ RUN \
     gpm-libs \
     vim-filesystem \
     vim-common \
-    vim-enhanced sudo && \
+    vim-enhanced sudo \
+    links \
+    wget && \
   yes | gem install showoff && \
   adduser showoff && \
   mkdir /home/showoff/presentation && \
@@ -33,3 +35,9 @@ RUN systemctl enable /etc/systemd/system/showoff.service
 
 # showoff
 EXPOSE 9090
+
+# incase you want to demo a web server
+EXPOSE 80
+
+# ...or a tomcat/java app
+EXPOSE 8080
