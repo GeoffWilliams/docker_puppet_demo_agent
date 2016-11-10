@@ -18,7 +18,9 @@ RUN \
     vim-common \
     vim-enhanced sudo \
     links \
-    wget && \
+    wget \
+    policycoreutils \
+    policycoreutils-restorecond && \
   yes | gem install showoff && \
   adduser showoff && \
   mkdir /home/showoff/presentation && \
