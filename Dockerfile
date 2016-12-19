@@ -24,11 +24,11 @@ RUN \
   yes | gem install showoff && \
   adduser showoff && \
   mkdir /home/showoff/presentation && \
-  systemctl disable firewalld && \
   echo "metadata_expire=never" >> /etc/yum.conf && \
+  echo "LANG=en_US.UTF-8" >> /etc/environment && \
+  echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
   echo "export PATH=/opt/puppetlabs/puppet/bin/:${PATH}" >> /etc/profile.d/zz_docker_puppet.sh && \
-  echo "export TERM=xterm"  >> /etc/profile.d/zz_docker_puppet.sh && \
-  echo "LC_ALL='en_US.UTF-8'" >> /etc/profile.d/zz_docker_puppet.sh
+  echo "export TERM=xterm"  >> /etc/profile.d/zz_docker_puppet.sh
 
 # systemd for showoff  
 ADD showoff.service /etc/systemd/system
