@@ -8,8 +8,6 @@ RUN \
 RUN \
   yum groupinstall -y "Development Tools" && \
   yum install -y cronie \
-    ruby \
-    ruby-devel \
     git \
     zlib-devel \
     which \
@@ -20,9 +18,24 @@ RUN \
     links \
     wget \
     policycoreutils \
-    policycoreutils-restorecond && \
-  yes | gem install showoff && \
-  adduser showoff && \
+    policycoreutils-restorecond \
+    iptables
+
+# upgrade ruby (sigh)
+RUN adduser showoff
+RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+
+RUN curl -L https://get.rvm.io | bash -s stable
+RUN /bin/bash -l -c "rvm requirements"
+RUN /bin/bash -l -c "rvm install 2.2.6"
+RUN usermod -aG rvm showoff
+
+USER showoff
+RUN /bin/bash -l -c "yes| gem install showoff"
+
+USER root
+# setup presentation
+RUN \
   mkdir /home/showoff/presentation && \
   echo "metadata_expire=never" >> /etc/yum.conf && \
   echo "LANG=en_US.UTF-8" >> /etc/environment && \
