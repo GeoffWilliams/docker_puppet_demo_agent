@@ -3,6 +3,6 @@ A blank VM to demonstrate installing the puppet agent, along with some demo slid
 
 ## Building
 ```shell
-docker build -t geoffwilliams/pe_agent_demo:XXX .
+docker build --squash -t geoffwilliams/pe_agent_demo:XXX .
 ```
 Where `XXX` is the tag number.  Suggestion - tag based on ISO date for sorting
