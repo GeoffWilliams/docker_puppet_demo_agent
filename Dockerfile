@@ -1,14 +1,12 @@
 # Install all the RPM packages that puppet will install and disable
 # metadata updates so that the environment can be joined to puppet
 # and run without error in an offline environment
-FROM centos:centos7
+FROM centos:7.4.1708
 
-# from https://hub.docker.com/r/picoded/centos-systemd/ but switched
-# to upstream centos to keep image size down
+# instructions from https://hub.docker.com/_/centos/
 ENV container docker
-RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs
-RUN yum -y update; yum clean all; \
-(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
+systemd-tmpfiles-setup.service ] || rm -f $i; done); \
 rm -f /lib/systemd/system/multi-user.target.wants/*;\
 rm -f /etc/systemd/system/*.wants/*;\
 rm -f /lib/systemd/system/local-fs.target.wants/*; \
@@ -35,6 +33,7 @@ RUN \
     wget \
     policycoreutils \
     policycoreutils-restorecond \
+    cmake \
     iptables && \
   yum clean all
 
@@ -44,10 +43,12 @@ RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
 
 RUN curl -L https://get.rvm.io | bash -s stable
 RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install 2.2.6 && rvm cleanup all"
+RUN /bin/bash -l -c "rvm install ruby-2.4.1 && rvm cleanup all"
 RUN usermod -aG rvm showoff
 
 USER showoff
+# first install fails with a native compile/utf-8 error, meh, second time ok
+RUN /bin/bash -l -c "yes| gem install showoff ; true"
 RUN /bin/bash -l -c "yes| gem install showoff"
 
 USER root
