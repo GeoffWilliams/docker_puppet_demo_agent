@@ -55,7 +55,6 @@ USER root
 # setup presentation
 RUN \
   mkdir /home/showoff/presentation && \
-  echo "metadata_expire=never" >> /etc/yum.conf && \
   echo "LANG=en_US.UTF-8" >> /etc/environment && \
   echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
   echo "export PATH=/opt/puppetlabs/puppet/bin/:${PATH}" >> /etc/profile.d/zz_docker_puppet.sh && \
