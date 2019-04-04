@@ -1,3 +1,3 @@
 image:	
-	docker build . -t declarativesystems/pe_agent_demo:$$(date --iso)-0
+	docker build . -t geoffwilliams/pe_agent_demo:$$(date --iso)-0
 

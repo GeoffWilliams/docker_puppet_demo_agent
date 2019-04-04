@@ -34,22 +34,31 @@ RUN \
     policycoreutils \
     policycoreutils-restorecond \
     cmake \
-    iptables && \
-  yum clean all
+    iptables
+
+# deps for RVM
+RUN yum install -y libffi-devel readline-devel sqlite-devel openssl-devel libyaml-devel
 
 # upgrade ruby (sigh)
 RUN adduser showoff
-RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
-
-RUN curl -L https://get.rvm.io | bash -s stable
-RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install ruby-2.4.1 && rvm cleanup all"
+RUN groupadd rvm
 RUN usermod -aG rvm showoff
 
 USER showoff
-# first install fails with a native compile/utf-8 error, meh, second time ok
+RUN gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+RUN bash -c "curl -L https://get.rvm.io | bash -s stable"
+RUN bash -l -c "rvm install ruby-2.4.1 && rvm cleanup all"
 RUN /bin/bash -l -c "yes| gem install showoff ; true"
 RUN /bin/bash -l -c "yes| gem install showoff"
+
+#RUN /bin/bash -l -c "rvm requirements"
+#RUN /bin/bash -l -c "rvm install ruby-2.4.1 && rvm cleanup all"
+#RUN usermod -aG rvm showoff
+
+#USER showoff
+# first install fails with a native compile/utf-8 error, meh, second time ok
+#RUN /bin/bash -l -c "yes| gem install showoff ; true"
+#RUN /bin/bash -l -c "yes| gem install showoff"
 
 USER root
 # setup presentation
@@ -57,7 +66,7 @@ RUN \
   mkdir /home/showoff/presentation && \
   echo "LANG=en_US.UTF-8" >> /etc/environment && \
   echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
-  echo "export PATH=/opt/puppetlabs/puppet/bin/:${PATH}" >> /etc/profile.d/zz_docker_puppet.sh && \
+  echo "export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin/:${PATH}" >> /etc/profile.d/zz_docker_puppet.sh && \
   echo "export TERM=xterm"  >> /etc/profile.d/zz_docker_puppet.sh
 
 # systemd for showoff  

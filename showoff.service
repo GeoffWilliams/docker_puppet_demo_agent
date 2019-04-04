@@ -9,7 +9,7 @@ Environment="LANG=en_US.UTF-8"
 PIDFile=/var/run/showoff.pid
 User=showoff
 WorkingDirectory=/home/showoff/presentation
-ExecStart=/usr/local/rvm/gems/ruby-2.4.1/wrappers/showoff serve
+ExecStart=/home/showoff/.rvm/gems/ruby-2.4.1/wrappers/showoff serve
 
 [Install]
 WantedBy=multi-user.target
